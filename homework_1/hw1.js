@@ -2,10 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const transferItemDir = (directory2000, directory1800) => {
-
     moveFile(directory2000, directory1800);
     moveFile(directory1800, directory2000);
-
 };
 
 const moveFile = (from, to) => {
