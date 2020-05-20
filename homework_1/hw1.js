@@ -44,7 +44,7 @@ async function transferItemDir (directory2000, directory1800) {
     await fs.rmdir(inconstantDir, err => {
         if (err) {console.log(err)}
     })
-};
+}
 
 async function moveFile (from, to) {
     let files = await fs.readdir(from);
@@ -52,7 +52,7 @@ async function moveFile (from, to) {
         await fs.rename(path.join(from, student), path.join(to, student))
     }
 
-};
+}
 
 
 
