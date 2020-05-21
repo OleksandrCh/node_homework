@@ -47,7 +47,7 @@ app.post('/reg', (req, res) => {
 
 app.post('/log', (req, res) => {
     let userAvailability = users.some(({email, password}) => req.body.email === email && req.body.password === password);
-
+    console.log(userAvailability)
     if (userAvailability) {
         res.render('main', {message: `Привет ${req.body.email}!`});
     } else {
