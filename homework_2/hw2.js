@@ -14,7 +14,7 @@ app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'static'));
 
 let users = [
-    {email: 'qwerty@qwerty.com', password: '0123456789', age: 30, isLogin: false}
+    {email: 'qwerty@qwerty.com', password: '0123456789', age: 30}
 ];
 
 
@@ -39,8 +39,8 @@ app.post('/reg', (req, res) => {
     if (userAvailability) {
         res.render('login',{message: 'Вы уже зарегистрированы, введите ваши данные!'});
     } else {
-        users.push({...req.body, isLogin: true});
-        res.render('main',{message: 'Добрый день новый пользователь!'});
+        users.push({...req.body});
+        res.render('main',{message: 'Добрый день, новый пользователь!'});
     }
 });
 
