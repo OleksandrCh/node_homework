@@ -42,7 +42,6 @@ app.post('/reg', (req, res) => {
         users.push({...req.body, isLogin: true});
         res.render('main',{message: 'Добрый день новый пользователь!'});
     }
-    // res.end();
 });
 
 app.post('/log', (req, res) => {
@@ -53,7 +52,6 @@ app.post('/log', (req, res) => {
     } else {
         res.render('registration', {message: `Тебе нужно зарегистрироваться!!!`});
     }
-    // res.end();
 });
 
 app.listen(5000, err => {
