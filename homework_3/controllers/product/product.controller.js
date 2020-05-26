@@ -17,17 +17,15 @@ module.exports = {
         await productService.updateProduct(change.id,change);
         let product = await productService.getProduct();
 
-        res.end()
+        res.json({product})
     },
 
     deleteProduct: async (req, res) => {
-        const params = req.params;
-        const query = req.query;
+        const {id} = req.body;
 
-        console.log('params ',params);
-        console.log('query ',query);
+        let product = await productService.deleteProductOfId(id);
 
-        res.end()
+        res.json({product})
     },
 
     createProduct: async (req, res) => {

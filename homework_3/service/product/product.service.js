@@ -32,9 +32,10 @@ class ProductService {
         return new Promise((resolve, reject) => {
             this.getProduct()
                 .then(allProducts => {
-                   let productOfId = allProducts.find(jsonProduct => {
-                       return +jsonProduct.id === +id});
-                   resolve(productOfId)
+                    let productOfId = allProducts.find(jsonProduct => {
+                        return +jsonProduct.id === +id
+                    });
+                    resolve(productOfId)
                 })
         })
 
@@ -78,6 +79,23 @@ class ProductService {
     deleteAllProduct() {
         truncate(productPath, err => {
             if (err) console.log(err)
+        })
+    }
+
+    deleteProductOfId(id) {
+        return new Promise((resolve, reject) => {
+            this.getProduct()
+                .then(allProducts => {
+                    // this.deleteAllProduct()
+                    let productsWithoutItemOfId = allProducts.map(jsonProduct => {
+                        console.log()
+                        if (+jsonProduct.id !== +id) {
+                            return jsonProduct;
+                        }
+                    });
+                    console.log('productsWithoutItemOfId ', productsWithoutItemOfId)
+                    resolve(productsWithoutItemOfId)
+                })
         })
     }
 }
