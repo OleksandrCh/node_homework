@@ -1,4 +1,4 @@
-const {userService} = require('../../service')
+const {userService} = require('../../service');
 
 module.exports = {
     getAllUsers: async (req, res) => {
@@ -11,10 +11,10 @@ module.exports = {
     },
 
     deleteUser: (req, res) => {
-        const params = req.params
+        const params = req.params;
         const query = req.query;
 
-        res.json({params, query})
+        res.json({params, query});
     },
 
     createUser: async (req, res) => {

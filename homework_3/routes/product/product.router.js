@@ -2,26 +2,17 @@ const {Router} = require('express');
 
 const productRouter = Router();
 
+const {productController} = require('../../controllers');
 
-productRouter.post('/', (req, res) => {
-    console.log(req.body);
-    res.end('POST products')
-});
+productRouter.post('/', productController.createProduct);
 
-productRouter.get('/', (req, res) => {
-    res.end('GTE products')
-})
+productRouter.get('/', productController.getAllProduct);
 
-productRouter.put('/', (req, res) => {
-    res.end('PUT products')
-});
+productRouter.get('/:id', productController.getOnceProductOfId);
 
-productRouter.delete('/:name', (req, res) => {
-    const params = req.params
-    const query = req.query;
+productRouter.put('/', productController.updateProduct);
 
-    res.json({params, query})
-})
+productRouter.delete('/:id', productController.deleteProduct)
 
 
 module.exports = productRouter;

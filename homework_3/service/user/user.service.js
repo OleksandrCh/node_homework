@@ -15,14 +15,14 @@ class UserService {
                 }
 
                 let JSONArr = JSONUsers.toString().split('\n');
-
+                console.log(JSONArr);
                 JSONArr.forEach(jsonUser => {
                     if (!jsonUser) {
                         return
                     }
 
                     users.push(JSON.parse(jsonUser))
-                })
+                });
 
                 resolve(users);
             })

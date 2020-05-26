@@ -1,0 +1,5 @@
+
+{"id":1,"name":"samsung","price":1111}
+{"id":3,"name":"iPhone","price":4444}
+{"id":2,"name":"xiaomi","price":2222}
+{"id":4,"name":"Fly","price":52526}
