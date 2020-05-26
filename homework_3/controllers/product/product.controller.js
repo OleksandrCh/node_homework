@@ -21,7 +21,7 @@ module.exports = {
     },
 
     deleteProduct: async (req, res) => {
-        const {id} = req.body;
+        const {id} = req.params;
 
         let product = await productService.deleteProductOfId(id);
 

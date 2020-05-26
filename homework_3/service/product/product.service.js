@@ -86,15 +86,16 @@ class ProductService {
         return new Promise((resolve, reject) => {
             this.getProduct()
                 .then(allProducts => {
-                    // this.deleteAllProduct()
+                    this.deleteAllProduct();
                     let productsWithoutItemOfId = allProducts.map(jsonProduct => {
-                        console.log()
+                        console.log();
                         if (+jsonProduct.id !== +id) {
                             return jsonProduct;
                         }
                     });
-                    console.log('productsWithoutItemOfId ', productsWithoutItemOfId)
-                    resolve(productsWithoutItemOfId)
+                    productsWithoutItemOfId.forEach(itemProduct =>   this.createProduct(itemProduct));
+                    this.getProduct()
+                        .then(value => resolve(value))
                 })
         })
     }

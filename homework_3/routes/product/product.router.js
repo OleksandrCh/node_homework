@@ -12,7 +12,7 @@ productRouter.get('/:id', productController.getOnceProductOfId);
 
 productRouter.put('/', productController.updateProduct);
 
-productRouter.delete('/:id', productController.deleteProduct)
+productRouter.delete('/:id', productController.deleteProduct);
 
 
 module.exports = productRouter;
