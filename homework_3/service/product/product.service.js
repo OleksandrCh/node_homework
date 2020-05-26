@@ -29,23 +29,13 @@ class ProductService {
     }
 
     getProductOfId(id) {
-        let product;
-
         return new Promise((resolve, reject) => {
-
-            let allProducts = this.getProduct();
-            // let JSONArr = allProducts.toString().split('\n');
-
-            allProducts.forEach(jsonProduct => {
-                let productOnce = JSON.parse(jsonProduct);
-                console.log(productOnce)
-                if (!jsonProduct) {
-                    return
-                }
-                if (productOnce.id === id) {
-                    resolve(productOnce)
-                }
-            });
+            this.getProduct()
+                .then(allProducts => {
+                   let productOfId = allProducts.find(jsonProduct => {
+                       return +jsonProduct.id === +id});
+                   resolve(productOfId)
+                })
         })
 
     }

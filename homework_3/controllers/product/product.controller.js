@@ -8,8 +8,8 @@ module.exports = {
 
     getOnceProductOfId: async (req, res) => {
         const {id} = req.params;
-        await productService.getProductOfId(id);
-        res.end();
+        let product = await productService.getProductOfId(id);
+        res.json({product});
     },
 
     updateProduct: async (req, res) => {
