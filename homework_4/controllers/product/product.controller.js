@@ -9,15 +9,14 @@ module.exports = {
 
     getOnceProductOfId: async (req, res) => {
         const {id} = req.params;
+
         const product = await productService.getProductOfId(id);
         res.json({product});
     },
 
     updateProduct: async (req, res) => {
         const change = req.body;
-        console.log('__________________________');
-        console.log(change);
-        console.log('__________________________');
+
         try {
             await productService.updateProduct(change);
         } catch (e) {
