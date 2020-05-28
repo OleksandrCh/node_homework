@@ -16,10 +16,10 @@ module.exports = {
 
         return ProductModel.create(product)
     },
-    updateProduct: (id, productChange) => {
+    updateProduct: ({name,id,price}) => {
         const ProductModel = db.getModel('Products');
 
-        return ProductModel.update(productChange, {Where: {id}})
+        return ProductModel.update({name,price}, {Where: {id}})
     },
     // deleteAllProduct: () => {
     //     return this.ProductModel.delete({Where: {}})

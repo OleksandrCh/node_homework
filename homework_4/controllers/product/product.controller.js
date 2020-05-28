@@ -15,10 +15,9 @@ module.exports = {
 
     updateProduct: async (req, res) => {
         const change = req.body;
-        await productService.updateProduct(change.id, change);
-        const product = await productService.getProduct();
+        await productService.updateProduct(change);
 
-        res.json({product})
+        res.end()
     },
 
     deleteProduct: async (req, res) => {
