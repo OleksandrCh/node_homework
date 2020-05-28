@@ -6,16 +6,34 @@ module.exports = {
         res.json({users})
     },
 
-    updateUser: (req, res) => {
+    getOnceUsersOfId: async (req, res) => {
+        const {id} = req.params;
 
-        res.end('PUT users')
+        const product = await userService.getUsersOfId(id);
+        res.json({product});
     },
 
-    deleteUser: (req, res) => {
-        const params = req.params;
-        const query = req.query;
+    updateUser: async (req, res) => {
+        const change = req.body;
 
-        res.json({params, query});
+        try {
+            await userService.updateUserOfId(change);
+        } catch (e) {
+            res.json(e)
+        }
+
+        res.end()
+    },
+
+    deleteUserOfId: async (req, res) => {
+        const {id} = req.params;
+        try {
+            const product = await userService.deleteUsersOfId(id);
+
+            res.json({product})
+        } catch (e) {
+            res.json(e)
+        }
     },
 
     createUser: async (req, res) => {

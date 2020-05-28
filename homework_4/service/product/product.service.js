@@ -8,7 +8,7 @@ module.exports = {
     },
     getProductOfId: (id) => {
         const ProductModel = db.getModel('Products');
-        console.log(id)
+
         return ProductModel.findOne({where: {id: id}})
     },
     createProduct: (product) => {

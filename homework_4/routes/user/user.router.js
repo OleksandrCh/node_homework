@@ -9,12 +9,10 @@ const checkUserValidity = require('../../middlewares/user/check-is-user-valid.mi
 userRouter.post('/',
     // checkUserValidity,
     userController.createUser);
-
 userRouter.get('/', userController.getAllUsers);
-
+userRouter.get('/:id', userController.getOnceUsersOfId);
 userRouter.put('/', userController.updateUser);
-
-userRouter.delete('/:name', userController.deleteUser);
+userRouter.delete('/:id', userController.deleteUserOfId);
 
 
 module.exports = userRouter;
