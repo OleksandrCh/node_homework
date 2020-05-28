@@ -19,14 +19,11 @@ module.exports = {
     updateProduct: ({name,id,price}) => {
         const ProductModel = db.getModel('Products');
 
-        return ProductModel.update({name,price}, {Where: {id}})
+        return ProductModel.update({name,price}, {where: {id: id}})
     },
-    // deleteAllProduct: () => {
-    //     return this.ProductModel.delete({Where: {}})
-    // },
     deleteProductOfId: (id) => {
         const ProductModel = db.getModel('Products');
 
-        return ProductModel.delete({Where: {id}})
+        return ProductModel.destroy({where: {id: id}})
     },
 };
