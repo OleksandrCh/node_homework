@@ -1,21 +1,22 @@
 const {productService} = require('../../service');
 
 module.exports = {
-    getAllProduct: async (req, res) => {
-        let product = await productService.getProduct();
-        res.json({product});
+    getAllProducts: async (req, res) => {
+        const products = await productService.getProducts();
+        console.log(products);
+        res.json({products});
     },
 
     getOnceProductOfId: async (req, res) => {
         const {id} = req.params;
-        let product = await productService.getProductOfId(id);
+        const product = await productService.getProductOfId(id);
         res.json({product});
     },
 
     updateProduct: async (req, res) => {
         const change = req.body;
-        await productService.updateProduct(change.id,change);
-        let product = await productService.getProduct();
+        await productService.updateProduct(change.id, change);
+        const product = await productService.getProduct();
 
         res.json({product})
     },
@@ -23,14 +24,17 @@ module.exports = {
     deleteProduct: async (req, res) => {
         const {id} = req.params;
 
-        let product = await productService.deleteProductOfId(id);
+        const product = await productService.deleteProductOfId(id);
 
         res.json({product})
     },
 
     createProduct: async (req, res) => {
-        await productService.createProduct(req.body);
-
-        res.redirect('/products')
+        try {
+            const product = await productService.createProduct(req.body);
+        }catch (e) {
+            res.json(e);
+        }
+        res.json({message: 'Объект создан'})
     }
 };

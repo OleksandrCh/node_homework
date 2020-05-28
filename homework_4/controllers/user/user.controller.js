@@ -3,10 +3,11 @@ const {userService} = require('../../service');
 module.exports = {
     getAllUsers: async (req, res) => {
         let users = await userService.getUsers();
-        res.render('users', {users})
+        res.json({users})
     },
 
     updateUser: (req, res) => {
+
         res.end('PUT users')
     },
 
@@ -18,8 +19,12 @@ module.exports = {
     },
 
     createUser: async (req, res) => {
-        await userService.createUser(req.body);
+        try {
+            await userService.createUsers(req.body);
+        } catch (e) {
+            res.json(e)
+        }
 
-        res.redirect('/users')
+        res.end()
     }
 };

@@ -1,8 +1,11 @@
 const express = require('express');
 const exprsBars = require('express-handlebars');
 const path = require('path');
+const db = require('./dataBase').getInstance();
+db.setModels();
 
 const app = express();
+
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -17,7 +20,7 @@ app.engine('.hbs', exprsBars({
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-const { productRouter, userRouter } = require('./routes');
+const {productRouter, userRouter} = require('./routes');
 
 app.get('/register', (req, res) => {
     res.render('register')
@@ -29,6 +32,14 @@ app.get('/login', (req, res) => {
 
 app.use('/users', userRouter);
 app.use('/products', productRouter);
+
+// app.post('/mysql', (req, res) => {
+//     connection.query(`INSERT INTO users (name, email, password) VALUES ('${req.body.name}', '${req.body.email}', '${req.body.password}')`);
+//     connection.query(`SELECT * FROM users`, (err, results) => {
+//         res.json({results});
+//     })
+// });
+
 
 app.listen(4444, (err) => {
     if (err) {
