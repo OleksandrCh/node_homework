@@ -8,7 +8,8 @@ module.exports = (sequelize, DataType) => {
             name: {
                 type: DataType.STRING,
                 allowNull: false,
-                unique: true
+                unique: true,
+                validate: {is: ["^[a-z]+$", 'i']}
             },
             price: {
                 type: DataType.INTEGER,

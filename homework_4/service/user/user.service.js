@@ -6,9 +6,11 @@ module.exports = {
         const UserModel = db.getModel('Users');
         return UserModel.findAll({});
     },
-    createUsers: (user) => {
+    createUser: ({name, email, password, age}) => {
+        console.log(name, email, password);
+
         const UserModel = db.getModel('Users');
-        UserModel.create(user);
+        UserModel.create({name, email, password, age});
     },
     getUsersOfId(id) {
         const UserModel = db.getModel('Users');
@@ -20,9 +22,9 @@ module.exports = {
 
         return UserModel.destroy({where: {id: id}})
     },
-    updateUserOfId({name,email,id}) {
+    updateUserOfId({name, email, id}) {
         const UserModel = db.getModel('Users');
 
-        return UserModel.update({name,email}, {where: {id: id}})
+        return UserModel.update({name, email}, {where: {id: id}})
     }
 };

@@ -38,7 +38,7 @@ module.exports = {
 
     createUser: async (req, res) => {
         try {
-            await userService.createUsers(req.body);
+            await userService.createUser(req.body);
         } catch (e) {
             res.json(e)
         }

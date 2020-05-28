@@ -40,6 +40,7 @@ module.exports = {
     createProduct: async (req, res) => {
         try {
             const product = await productService.createProduct(req.body);
+            res.json({message: 'Объект создан'})
         } catch (e) {
             res.json(e);
         }
