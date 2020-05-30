@@ -3,13 +3,12 @@ const {productService} = require('../../service');
 module.exports = {
     getAllProducts: async (req, res) => {
         const products = await productService.getProducts();
-        console.log(products);
         res.json({products});
     },
 
     getOnceProductOfId: async (req, res) => {
         const {id} = req.params;
-
+        console.log(req.query);
         const product = await productService.getProductOfId(id);
         res.json({product});
     },

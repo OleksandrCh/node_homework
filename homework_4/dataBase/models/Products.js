@@ -9,7 +9,6 @@ module.exports = (sequelize, DataType) => {
                 type: DataType.STRING,
                 allowNull: false,
                 unique: true,
-                validate: {is: ["^[a-z]+$", 'i']}
             },
             price: {
                 type: DataType.INTEGER,

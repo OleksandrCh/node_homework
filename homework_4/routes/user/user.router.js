@@ -6,7 +6,7 @@ const {userController} = require('../../controllers');
 const checkUserValidity = require('../../middlewares/user/check-is-user-valid.middleware')
 
 
-userRouter.post('/', userController.createUser);
+userRouter.post('/', checkUserValidity, userController.createUser);
     // checkUserValidity,
 
 userRouter.get('/', userController.getAllUsers);

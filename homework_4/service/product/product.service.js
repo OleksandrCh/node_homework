@@ -9,21 +9,21 @@ module.exports = {
     getProductOfId: (id) => {
         const ProductModel = db.getModel('Products');
 
-        return ProductModel.findOne({where: {id: id}})
+        return ProductModel.findOne({where: {id}})
     },
-    createProduct: (product) => {
+    createProduct: ({name, price}) => {
         const ProductModel = db.getModel('Products');
 
-        return ProductModel.create(product)
+        return ProductModel.create({name,price})
     },
     updateProduct: ({name,id,price}) => {
         const ProductModel = db.getModel('Products');
 
-        return ProductModel.update({name,price}, {where: {id: id}})
+        return ProductModel.update({name,price}, {where: {id}})
     },
     deleteProductOfId: (id) => {
         const ProductModel = db.getModel('Products');
 
-        return ProductModel.destroy({where: {id: id}})
+        return ProductModel.destroy({where: {id}})
     },
 };

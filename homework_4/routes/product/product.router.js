@@ -4,7 +4,9 @@ const productRouter = Router();
 
 const {productController} = require('../../controllers');
 
-productRouter.post('/', productController.createProduct);
+const productValidate = require('../../middlewares/product/check-is-product-valid.middleware')
+
+productRouter.post('/', productValidate, productController.createProduct);
 
 productRouter.get('/', productController.getAllProducts);
 
