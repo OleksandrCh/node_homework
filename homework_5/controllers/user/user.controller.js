@@ -52,18 +52,18 @@ module.exports = {
     },
 
     loginUser: async (req, res, next) => {
-           try{
-               const {password, email} = req.body;
-               const user = await userService.getUsersOfParams(email);
+        try {
+            const {password, email} = req.body;
+            const user = await userService.getUsersOfParams(email);
 
-               if (!user){
-                   return next(new ErrorHandler('user is not found', 404, 4001));
-               }
-               await checkHashPassword(user.password, password);
+            if (!user) {
+                return next(new ErrorHandler('user is not found', 404, 4001));
+            }
+            await checkHashPassword(user.password, password);
 
-               res.json(user)
-           }catch (e) {
-               res.json(e)
-           }
+            res.json(user)
+        } catch (e) {
+            res.json(e)
+        }
     }
 };

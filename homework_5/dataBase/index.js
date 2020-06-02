@@ -38,9 +38,7 @@ module.exports = (() => {
             setModels: () => getModels(),
             getModel: (modelsName) => models[modelsName]
         }
-
     }
-
 
     return {
         getInstance: () => {
