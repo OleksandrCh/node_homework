@@ -13,6 +13,7 @@ userRouter.get('/', userController.getAllUsers);
 userRouter.get('/:id', userController.getOnceUsersOfId);
 userRouter.put('/', userController.updateUser);
 userRouter.delete('/:id', userController.deleteUserOfId);
+userRouter.post('/auth', userController.loginUser);
 
 
 module.exports = userRouter;

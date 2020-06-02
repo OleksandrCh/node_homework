@@ -1,5 +1,7 @@
+const {modelName: {USER}} = require('../../constants');
+
 module.exports = (sequelize, DataType) => {
-    const Users = sequelize.define('Users', {
+    const Users = sequelize.define(USER, {
             id: {
                 type: DataType.INTEGER,
                 primaryKey: true,
@@ -9,7 +11,6 @@ module.exports = (sequelize, DataType) => {
                 type: DataType.STRING,
                 unique: true,
                 allowNull: false,
-                // validate: {isEmail: true}
             },
             name: {
                 type: DataType.STRING,
