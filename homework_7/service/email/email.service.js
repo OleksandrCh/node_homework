@@ -7,4 +7,4 @@ const transporter = nodeMailer.createTransport({
         user: process.env.MAIL_SEND,
         pass: process.env.PASSWORD_EMAIL
     }
-});
+})
