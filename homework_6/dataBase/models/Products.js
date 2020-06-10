@@ -18,8 +18,8 @@ module.exports = (sequelize, DataType) => {
                 allowNull: false
             },
             discount: {
-                type: DataType.INTEGER,
-                allowNull: true
+                type: DataType.STRING,
+                unique: true
             }
         },
         {

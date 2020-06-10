@@ -1,4 +1,6 @@
 const {productService} = require('../../service');
+const {hashPassword} = require('../../helpers');
+const errorHandler = require('../../error/errorHandler');
 
 module.exports = {
     getAllProducts: async (req, res) => {
@@ -7,30 +9,32 @@ module.exports = {
     },
 
     getOnceProductOfId: async (req, res) => {
-        const {id} = req.params;
-        console.log(req.query);
-        const product = await productService.getProductOfId(id);
+        const {idProduct} = req.params;
+        const product = await productService.getProductOfId(idProduct);
         res.json({product});
     },
 
-    updateProduct: async (req, res) => {
-        const change = req.body;
-
+    updateProduct: async (req, res, next) => {
         try {
-            await productService.updateProduct(change);
+            const change = req.body;
+            const {idProduct} = req.params;
+
+
+            await productService.updateProduct(change, idProduct);
+            const product = await productService.getProductOfId(idProduct);
+            res.json({product})
         } catch (e) {
             res.json(e)
         }
 
-        res.end()
     },
 
     deleteProduct: async (req, res) => {
-        const {id} = req.params;
+        const {idProduct} = req.params;
         try {
-            const product = await productService.deleteProductOfId(id);
+            await productService.deleteProductOfId(idProduct);
 
-            res.json({product})
+            res.json({message: 'Продукт удалён!'})
         } catch (e) {
             res.json(e)
         }
@@ -38,11 +42,13 @@ module.exports = {
 
     createProduct: async (req, res) => {
         try {
-            const product = await productService.createProduct(req.body);
+            const discount = await hashPassword(req.body.discount);
+            req.body.discount = discount;
+            await productService.createProduct(req.body);
+
             res.json({message: 'Объект создан'})
         } catch (e) {
-            res.json(e);
+            res.json(e.message);
         }
-        res.json({message: 'Объект создан'})
     }
 };

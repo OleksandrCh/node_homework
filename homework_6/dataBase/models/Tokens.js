@@ -18,8 +18,9 @@ module.exports = (sequelize, DataType) => {
             },
             refreshToken: {
                 type: DataType.STRING,
+                allowNull: false
             },
-            createAt: {
+            createdAt: {
                 type: DataType.DATE,
                 defaultValue: sequelize.fn('now')
 
@@ -30,5 +31,5 @@ module.exports = (sequelize, DataType) => {
             timestamps: false
         });
 
-    return Products;
+    return Tokens;
 };

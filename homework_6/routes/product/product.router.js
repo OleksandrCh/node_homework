@@ -4,17 +4,17 @@ const productRouter = Router();
 
 const {productController} = require('../../controllers');
 
-const productValidate = require('../../middlewares/product/check-is-product-valid.middleware')
+const {checkIsBaseHaveProduct, productValidate} = require('../../middlewares');
 
 productRouter.post('/', productValidate, productController.createProduct);
 
 productRouter.get('/', productController.getAllProducts);
 
-productRouter.get('/:id', productController.getOnceProductOfId);
+productRouter.get('/:idProduct', checkIsBaseHaveProduct, productController.getOnceProductOfId);
 
-productRouter.put('/', productController.updateProduct);
+productRouter.put('/:idProduct', checkIsBaseHaveProduct, productValidate, productController.updateProduct);
 
-productRouter.delete('/:id', productController.deleteProduct);
+productRouter.delete('/:idProduct', checkIsBaseHaveProduct, productController.deleteProduct);
 
 
 module.exports = productRouter;

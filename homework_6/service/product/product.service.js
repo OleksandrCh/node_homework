@@ -1,4 +1,5 @@
 const db = require('../../dataBase').getInstance();
+
 const {modelName: {PRODUCT}} = require('../../constants');
 
 module.exports = {
@@ -7,24 +8,24 @@ module.exports = {
 
         return ProductModel.findAll({});
     },
-    getProductOfId: (id) => {
+    getProductOfId: (idProduct) => {
         const ProductModel = db.getModel(PRODUCT);
 
-        return ProductModel.findOne({where: {id}})
+        return ProductModel.findOne({where: {id: idProduct}})
     },
-    createProduct: ({name, price}) => {
+    createProduct: (product) => {
         const ProductModel = db.getModel(PRODUCT);
 
-        return ProductModel.create({name,price})
+        return ProductModel.create(product)
     },
-    updateProduct: ({name,id,price}) => {
+    updateProduct: (product, idProduct) => {
         const ProductModel = db.getModel(PRODUCT);
 
-        return ProductModel.update({name,price}, {where: {id}})
+        return ProductModel.update(product, {where: {id: idProduct}})
     },
-    deleteProductOfId: (id) => {
+    deleteProductOfId: (idProduct) => {
         const ProductModel = db.getModel(PRODUCT);
 
-        return ProductModel.destroy({where: {id}})
+        return ProductModel.destroy({where: {id: idProduct}})
     },
 };

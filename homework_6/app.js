@@ -1,11 +1,11 @@
 const express = require('express');
 const exprsBars = require('express-handlebars');
 const path = require('path');
+require('dotenv').config();
 const db = require('./dataBase').getInstance();
 db.setModels();
 
 const app = express();
-
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -20,7 +20,7 @@ app.use(express.urlencoded());
 // app.set('view engine', '.hbs');
 // app.set('views', path.join(__dirname, 'views'));
 
-const {productRouter, userRouter} = require('./routes');
+const {productRouter, userRouter, authRouter} = require('./routes');
 
 // app.get('/register', (req, res) => {
 //     res.render('register')
@@ -36,25 +36,26 @@ const {productRouter, userRouter} = require('./routes');
 //     })
 // });
 
-
 app.use('/users', userRouter);
 app.use('/products', productRouter);
+app.use('/auth', authRouter);
 
 app.use('*', (err, req, res, next) => {
     res
         .status(err.status || 400)
-        .json({message: err.message,
-        code: err.customCode})
+        .json({
+            message: err.message,
+            code: err.customCode
+        })
 });
 
-app.listen(4444, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
     if (err) {
         console.log(err);
     } else {
-        console.log('Listen 4444...');
+        console.log(`Listen ${process.env.PORT || 4444}...`);
     }
 });
-
 
 process.on("unhandledRejection", reason => {
     console.log('-*-*-*-*-*-*-*-*-*-*-*-*-*-');

@@ -11,24 +11,24 @@ module.exports = {
         const UserModel = db.getModel(USER);
         UserModel.create(user);
     },
-    getUsersOfId(id) {
+    getUsersOfId(userId) {
         const UserModel = db.getModel(USER);
 
-        return UserModel.findOne({where: {id}})
+        return UserModel.findByPk(userId)
     },
     getUsersOfParams(email) {
         const UserModel = db.getModel(USER);
 
         return UserModel.findOne({where: {email}})
     },
-    deleteUsersOfId(id) {
+    deleteUsersOfId(userId) {
         const UserModel = db.getModel(USER);
 
-        return UserModel.destroy({where: {id}})
+        return UserModel.destroy({where: {id: userId}})
     },
-    updateUserOfId({name, email, id}) {
+    updateUserOfId(change, userId) {
         const UserModel = db.getModel(USER);
 
-        return UserModel.update({name, email}, {where: {id}})
+        return UserModel.update(change, {where: {id: userId}})
     }
 };

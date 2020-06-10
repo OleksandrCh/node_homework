@@ -18,8 +18,8 @@ module.exports = (() => {
     let instance;
 
     function initConnection() {
-        const client = new Sequelize('shop', 'root', '011235813', {
-            host: 'localhost',
+        const client = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
+            host: process.env.DB_HOST,
             dialect: 'mysql'
         });
 

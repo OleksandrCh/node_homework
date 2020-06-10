@@ -9,17 +9,16 @@ module.exports = {
     },
 
     getOnceUsersOfId: async (req, res) => {
-        const {id} = req.params;
-
-        const product = await userService.getUsersOfId(id);
-        res.json({product});
+       const  user = req.user;
+        res.json({user});
     },
 
     updateUser: async (req, res) => {
         const change = req.body;
+        const {userId} = req.params;
 
         try {
-            await userService.updateUserOfId(change);
+            await userService.updateUserOfId(change, userId);
         } catch (e) {
             res.json(e)
         }
@@ -44,26 +43,10 @@ module.exports = {
             req.body.password = password;
 
             await userService.createUser(req.body);
+            res.json('Пользователь создан');
         } catch (e) {
             res.json(e)
         }
 
-        res.json('User has been created')
-    },
-
-    loginUser: async (req, res, next) => {
-        try {
-            const {password, email} = req.body;
-            const user = await userService.getUsersOfParams(email);
-
-            if (!user) {
-                return next(new ErrorHandler('user is not found', 404, 4001));
-            }
-            await checkHashPassword(user.password, password);
-
-            res.json(user)
-        } catch (e) {
-            res.json(e)
-        }
     }
 };
