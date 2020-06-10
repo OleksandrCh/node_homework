@@ -9,6 +9,7 @@ module.exports = async (req, res, next) => {
 
         if (!user) next(new errorHandler('Dont find user!', 404));
         req.user = user
+
         next()
     } catch (e) {
         res.json({message: e.message})
