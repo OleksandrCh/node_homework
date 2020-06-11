@@ -7,8 +7,8 @@ module.exports = async (req, res, next) => {
     try {
         const user = await userService.getUsersOfId(userId);
 
-        if (!user) next(new errorHandler('Dont find user!', 404));
-        req.user = user
+        if (!user) return next(new errorHandler('Dont find user!', 404));
+        req.user = user;
 
         next()
     } catch (e) {

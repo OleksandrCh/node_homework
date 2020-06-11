@@ -4,3 +4,4 @@ module.exports.tokenPass = require('./tokenPass');
 module.exports.customError = require('./customError');
 module.exports.statusCode = require('./statusCode');
 module.exports.requestHeader = require('./requestHeader.enum');
+module.exports.emailActionEnum = require('./emailAction.enum');

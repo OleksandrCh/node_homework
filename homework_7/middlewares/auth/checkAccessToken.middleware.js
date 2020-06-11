@@ -13,14 +13,14 @@ module.exports = async (req, res, next) => {
     try {
         const authorizationToken = req.get(AUTHORIZATION);
 
-        if (!authorizationToken) next(new errorHandler(NOT_VALID.message, BAD_REQUEST, NOT_VALID.customCode));
+        if (!authorizationToken) return next(new errorHandler(NOT_VALID.message, BAD_REQUEST, NOT_VALID.customCode));
 
         jwt.verify(authorizationToken, JWT_ACCESS, err => {
-            if (err) next(new errorHandler(NOT_VALID_TOKEN.message, UNAUTHORIZED, NOT_VALID_TOKEN.customCode))
+            if (err) return next(new errorHandler(NOT_VALID_TOKEN.message, UNAUTHORIZED, NOT_VALID_TOKEN.customCode))
         });
 
         const tokenFromDB = await authService.getTokenByParams({accessToken: authorizationToken});
-        if (!tokenFromDB) next(new errorHandler(NOT_VALID_TOKEN.message, UNAUTHORIZED, NOT_VALID_TOKEN.customCode));
+        if (!tokenFromDB) return next(new errorHandler(NOT_VALID_TOKEN.message, UNAUTHORIZED, NOT_VALID_TOKEN.customCode));
 
         req.userId = tokenFromDB.userId;
 

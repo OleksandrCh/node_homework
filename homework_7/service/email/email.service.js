@@ -1,21 +1,50 @@
 const nodeMailer = require('nodemailer');
+const EmailTemplates = require('email-templates');
+const path = require('path');
+
+const {ROOT_MAIL, ROOT_MAIL_PASS, ROOT_MAIL_SERVICE, FRONTEND_URL} = require('../../config');
+const htmlTemplates = require('../../emailTemplates');
 
 const transporter = nodeMailer.createTransport({
-    service: 'gmail',
+    service: ROOT_MAIL_SERVICE,
     port: 387,
     auth: {
-        user: process.env.MAIL_SEND,
-        pass: process.env.PASSWORD_EMAIL
+        user: ROOT_MAIL,
+        pass: ROOT_MAIL_PASS
     }
 });
 
-module.exports = (mail) => {
-    const mailOptions = {
-        from: 'Some else',
-        to: mail,
-        subject: 'Hello user',
-        html: '<h1> TEST </h1>'
+const emailTemplates = new EmailTemplates({
+    message: null,
+    views: {
+        root: path.resolve(process.cwd(), 'emailTemplates')
     }
+});
 
-    return transporter.sendMail(mailOptions)
-};
+class EmailService {
+    async sendMail(userMail, action, context) {
+        try {
+            const templateInfo = htmlTemplates[action];
+            const html = await emailTemplates.render(templateInfo.templateFileName, {
+                ...context,
+                frontendUrl: FRONTEND_URL,
+                messageText: templateInfo.text
+            });
+
+            const mailOptions = {
+                from: ROOT_MAIL,
+                to: userMail,
+                subject: templateInfo.subject,
+                html
+            };
+            console.log('Mail send');
+            return transporter.sendMail(mailOptions)
+        } catch (e) {
+            console.log(e);
+        }
+
+
+    }
+}
+
+module.exports = new EmailService();

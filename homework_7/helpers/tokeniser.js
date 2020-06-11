@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const {JWT_ACCESS, JWT_REFRESH, JWT_ACCESS_TIME, JWT_REFRESH_TIME} = require('../constants/tokenPass');
+const {JWT_ACCESS, JWT_REFRESH, JWT_ACCESS_TIME, JWT_REFRESH_TIME} = require('../config');
 
 
 module.exports = () => {

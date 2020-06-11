@@ -1,6 +1,6 @@
-const {userService} = require('../../service');
-const {hashPassword, checkHashPassword} = require('../../helpers');
-const ErrorHandler = require('../../error/errorHandler');
+const {userService, emailService} = require('../../service');
+const {hashPassword} = require('../../helpers');
+const {emailActionEnum} = require('../../constants');
 
 module.exports = {
     getAllUsers: async (req, res) => {
@@ -9,7 +9,7 @@ module.exports = {
     },
 
     getOnceUsersOfId: async (req, res) => {
-       const  user = req.user;
+        const user = req.user;
         res.json({user});
     },
 
@@ -39,10 +39,14 @@ module.exports = {
 
     createUser: async (req, res) => {
         try {
-            const password = await hashPassword(req.body.password);
-            req.body.password = password;
+            const user = req.body;
 
-            await userService.createUser(req.body);
+            const password = await hashPassword(user.password);
+
+            user.password = password;
+
+            await userService.createUser(user);
+            await emailService.sendMail(user.email,emailActionEnum.USER_REGISTER, {userName: user.name});
             res.json('Пользователь создан');
         } catch (e) {
             res.json(e)
