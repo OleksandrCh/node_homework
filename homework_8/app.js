@@ -2,6 +2,7 @@ const express = require('express');
 // const exprsBars = require('express-handlebars');
 const path = require('path');
 const morgan = require('morgan');
+const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
 const db = require('./dataBase').getInstance();
@@ -10,11 +11,12 @@ db.setModels();
 const {PORT} = require('./config');
 const app = express();
 
+app.use(fileUpload({}));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(morgan('dev'));
-// app.use(express.static(path.join(__dirname, 'views')));
-//
+app.use(express.static(path.join(__dirname, 'public')));
+
 // app.engine('.hbs', exprsBars({
 //     defaultLayout: false,
 //     extname: '.hbs'
