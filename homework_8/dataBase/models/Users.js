@@ -23,6 +23,9 @@ module.exports = (sequelize, DataType) => {
             age: {
                 type: DataType.INTEGER,
                 allowNull: false
+            },
+            avatar: {
+                type: DataType.STRING,
             }
         },
         {

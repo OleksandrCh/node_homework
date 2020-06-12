@@ -4,3 +4,5 @@ module.exports.checkIsBaseHaveProduct = require('./product/check-is-base-have-pr
 module.exports.checkAccessToken = require('./auth/checkAccessToken.middleware');
 module.exports.checkRefreshToken = require('./auth/chackeRefreshToken.middleware');
 module.exports.productValidate = require('./product/check-is-product-valid.middleware');
+module.exports.checkerFile = require('./files/check-file.middleware');
+module.exports.checkUserPhotoCountMiddleware = require('./files/checkUserPhotoCountMiddleware');

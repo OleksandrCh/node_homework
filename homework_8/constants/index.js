@@ -5,3 +5,4 @@ module.exports.regExpEnum = require('./regexp.enum');
 module.exports.requestHeader = require('./requestHeader.enum');
 module.exports.statusCode = require('./statusCode');
 module.exports.tokenPass = require('./tokenPass');
+module.exports.filesCheckOptionsEnum = require('./filesCheckOptionsEnum');

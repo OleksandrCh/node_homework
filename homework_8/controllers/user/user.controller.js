@@ -1,6 +1,10 @@
-const {emailActionEnum, statusCode: {OK,CREATED},requestHeader:{AUTHORIZATION}} = require('../../constants');
+const uuid = require('uuid').v1();
+const fsExtra = require('fs-extra').promises;
+const path = require('path');
+
+const {emailActionEnum, statusCode: {OK, CREATED}, requestHeader: {AUTHORIZATION}} = require('../../constants');
 const {hashPassword} = require('../../helpers');
-const {userService, emailService,authService} = require('../../service');
+const {userService, emailService, authService} = require('../../service');
 
 module.exports = {
     getAllUsers: async (req, res) => {
@@ -24,7 +28,7 @@ module.exports = {
 
             const user = await userService.getUsersOfId(userId);
 
-            await emailService.sendMail(user.email,emailActionEnum.USER_UPDATE, {userName: user.name});
+            await emailService.sendMail(user.email, emailActionEnum.USER_UPDATE, {userName: user.name});
 
             res.json(OK);
         } catch (e) {
@@ -34,16 +38,16 @@ module.exports = {
 
     deleteUserOfId: async (req, res, next) => {
         try {
-            const {id} = req.params;
+            const {userId} = req.params;
             const token = req.get(AUTHORIZATION);
-            const user = await userService.getUsersOfId(id);
+            const user = req.user;
 
-            await userService.deleteUsersOfId(id);
             await authService.deleteTokenByParams({accessToken: token});
+            await userService.deleteUsersOfId(userId);
 
-            await emailService.sendMail(user.email,emailActionEnum.USER_UPDATE, {userName: user.name});
+            await emailService.sendMail(user.email, emailActionEnum.USER_DELETE, {userName: user.name});
 
-            res.sendStatus(OK).json("Пользователь удалился")
+            res.sendStatus(OK);
         } catch (e) {
             next(e)
         }
@@ -52,12 +56,24 @@ module.exports = {
     createUser: async (req, res, next) => {
         try {
             const user = req.body;
+            const [avatar] = req.photos;
+            const [docs] = req.docs;
+            const fileExtension = avatar.name.split('.').pop();
 
             user.password = await hashPassword(user.password);
 
-            await userService.createUser(user);
+            const {id} = await userService.createUser(user);
+
+            const photosDir = `users/${id}/photos`;
+            const photoName = `${uuid}.${fileExtension}`;
+
+            await fsExtra.mkdir(path.resolve(process.cwd(), 'public', photosDir), {recursive: true});
+
+            await avatar.mv(path.resolve(process.cwd(), 'public', photosDir, photoName));
+
+            await userService.updateUserOfId({avatar: `${photosDir}/${photoName}`},id);
             await emailService.sendMail(user.email, emailActionEnum.USER_REGISTER, {userName: user.name});
-            res.sendStatus(CREATED).json('Пользователь создан');
+            res.sendStatus(CREATED)
         } catch (e) {
             next(e)
         }

@@ -11,7 +11,7 @@ module.exports = {
     createUser: (user) => {
         const UserModel = db.getModel(USER);
 
-        UserModel.create(user);
+        return UserModel.create(user);
     },
     getUsersOfId(userId) {
         const UserModel = db.getModel(USER);
@@ -23,10 +23,10 @@ module.exports = {
 
         return UserModel.findOne({where: {email}})
     },
-    deleteUsersOfId(userId) {
+    deleteUsersOfId(id) {
         const UserModel = db.getModel(USER);
 
-        return UserModel.destroy({where: {id: userId}})
+        return UserModel.destroy({where: {id}})
     },
     updateUserOfId(change, userId) {
         const UserModel = db.getModel(USER);
