@@ -4,11 +4,11 @@ const path = require('path');
 const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
 require('dotenv').config();
-
 const db = require('./dataBase').getInstance();
-db.setModels();
 
+db.setModels();
 const {PORT} = require('./config');
+
 const app = express();
 
 app.use(fileUpload({}));
@@ -47,6 +47,11 @@ app.listen(PORT || 4444, (err) => {
         console.log(`Listen ${PORT || 4444}...`);
     }
 });
+const CronJob = require('cron').CronJob;
+const {CronJobSendMailDontHavePhoto} = require('./helpers');
+
+const job = new CronJob('1 * * * *', CronJobSendMailDontHavePhoto(),null, true)
+job.start();
 
 process.on("unhandledRejection", reason => {
     console.log('-*-*-*-*-*-*-*-*-*-*-*-*-*-');

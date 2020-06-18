@@ -1,6 +1,6 @@
-const uuid = require('uuid').v1();
 const fsExtra = require('fs-extra').promises;
 const path = require('path');
+const uuid = require('uuid').v1();
 
 const {emailActionEnum, statusCode: {OK, CREATED}, requestHeader: {AUTHORIZATION}} = require('../../constants');
 const {hashPassword} = require('../../helpers');

@@ -23,6 +23,9 @@ module.exports = (sequelize, DataType) => {
             discount: {
                 type: DataType.STRING,
                 unique: true
+            },
+            productPhotos: {
+                type: DataType.STRING,
             }
         },
         {
