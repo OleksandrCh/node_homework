@@ -58,20 +58,22 @@ module.exports = {
             const user = req.body;
             const [avatar] = req.photos;
             const [docs] = req.docs;
-            const fileExtension = avatar.name.split('.').pop();
 
             user.password = await hashPassword(user.password);
 
             const {id} = await userService.createUser(user);
 
-            const photosDir = `users/${id}/photos`;
-            const photoName = `${uuid}.${fileExtension}`;
+            if (avatar) {
+                const fileExtension = avatar.name.split('.').pop();
+                const photosDir = `users/${id}/photos`;
+                const photoName = `${uuid}.${fileExtension}`;
 
-            await fsExtra.mkdir(path.resolve(process.cwd(), 'public', photosDir), {recursive: true});
+                await fsExtra.mkdir(path.resolve(process.cwd(), 'public', photosDir), {recursive: true});
 
-            await avatar.mv(path.resolve(process.cwd(), 'public', photosDir, photoName));
+                await avatar.mv(path.resolve(process.cwd(), 'public', photosDir, photoName));
 
-            await userService.updateUserOfId({avatar: `${photosDir}/${photoName}`},id);
+                await userService.updateUserOfId({avatar: `${photosDir}/${photoName}`}, id);
+            }
             await emailService.sendMail(user.email, emailActionEnum.USER_REGISTER, {userName: user.name});
             res.sendStatus(CREATED)
         } catch (e) {

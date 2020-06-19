@@ -60,24 +60,27 @@ module.exports = {
             const userId = req.userId;
             const {name} = req.body;
             const [productPhotos] = req.photos;
-            const fileExtension = productPhotos.name.split('.').pop();
 
             if (req.body.discount) {
+
                 const discount = await hashPassword(req.body.discount);
                 req.body.discount = discount;
             }
-
             req.body.userId = userId;
 
             const {id} = await productService.createProduct(req.body);
 
-            const photosDir = `product/${name}/photos`;
-            const photoName = `${uuid}.${fileExtension}`;
+            if (productPhotos) {
 
-            await fsExtra.mkdir(path.resolve(process.cwd(), 'public', photosDir), {recursive: true});
-            await productPhotos.mv(path.resolve(process.cwd(), 'public', photosDir, photoName));
+                const fileExtension = productPhotos.name.split('.').pop();
+                const photosDir = `product/${name}/photos`;
+                const photoName = `${uuid}.${fileExtension}`;
 
-            productService.updateProduct({productPhotos:  `${photosDir}/${photoName}`}, id);
+                await fsExtra.mkdir(path.resolve(process.cwd(), 'public', photosDir), {recursive: true});
+                await productPhotos.mv(path.resolve(process.cwd(), 'public', photosDir, photoName));
+
+                productService.updateProduct({productPhotos: `${photosDir}/${photoName}`}, id);
+            }
 
             const user = await userService.getUsersOfId(req.userId);
             await emailService.sendMail(user.email, emailActionEnum.PRODUCT_CREATE, {userName: user.name});

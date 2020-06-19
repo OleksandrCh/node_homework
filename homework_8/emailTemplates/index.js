@@ -16,6 +16,11 @@ module.exports = {
         text: 'You have update your account',
         templateFileName: 'mainBlock'
     },
+    [emailActionEnum.USER_DONT_HAVE_AVATAR]: {
+        subject: 'You don\'t have photo in your Avatar!',
+        text: 'Please download avatar in your account',
+        templateFileName: 'mainBlock'
+    },
     [emailActionEnum.PRODUCT_CREATE]: {
         subject: 'You makes product',
         text: 'HELLO, you create new product',

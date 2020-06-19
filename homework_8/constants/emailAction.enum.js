@@ -8,4 +8,5 @@ module.exports = {
     PRODUCT_DELETE: '6',
     PRODUCT_NOT_HAVE_PHOTO: '7',
 
+    USER_DONT_HAVE_AVATAR: '8',
 };

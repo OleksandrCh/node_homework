@@ -8,6 +8,7 @@ const db = require('./dataBase').getInstance();
 
 db.setModels();
 const {PORT} = require('./config');
+const {CronRun} = require('./cron');
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
-
+CronRun();
 // app.engine('.hbs', exprsBars({
 //     defaultLayout: false,
 //     extname: '.hbs'
@@ -47,11 +48,6 @@ app.listen(PORT || 4444, (err) => {
         console.log(`Listen ${PORT || 4444}...`);
     }
 });
-const CronJob = require('cron').CronJob;
-const {CronJobSendMailDontHavePhoto} = require('./helpers');
-
-const job = new CronJob('1 * * * *', CronJobSendMailDontHavePhoto(),null, true)
-job.start();
 
 process.on("unhandledRejection", reason => {
     console.log('-*-*-*-*-*-*-*-*-*-*-*-*-*-');
